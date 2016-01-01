@@ -38,6 +38,7 @@
           cameraStream = stream;
           cameraURL = window.URL.createObjectURL(stream);
           THETA_GL.setVideoSrc(cameraURL);
+          THETA_GL.startAnimate();
         },
         function(err) {
           console.error('getUserMedia Error:', err);
@@ -90,7 +91,6 @@
     }
 
     THETA_GL.init(/* divId */ 'container', /* autoResuze */ true,  /* debug */ false);
-    THETA_GL.startAnimate();
   </script>
 </body>
 
