@@ -19,13 +19,15 @@ RICHO THETA S の映像をWebGL(three.js)とUVマッピングを用いて、全�
 
 
 ## サンプル
+http://mganeko.github.io/THETA_GL/
+
 ### USBカメラとして接続して利用
 * navigator.getUserMedia()を利用してカメラ映像を取り込んだものを表示するサンプルです
-* theta_360.html
+* [theta_360.html](http://mganeko.github.io/THETA_GL/theta_360.html)
 
 ### WebRTC SFU 配信映像を利用
 * [WebRTC SFU as a Service Anzu](https://anzu.shiguredo.jp/) の配信映像を表示するサンプルです
-* theta_anzu_360.html
+* [theta_anzu_360.html](http://mganeko.github.io/THETA_GL/theta_anzu_360.html)
 * [Anzuダッシュボード](https://anzu.shiguredo.jp/dashboard.html)で配信を開始してから、サンプルでチャネルIDを指定して接続していください
 
 ## 使い方
