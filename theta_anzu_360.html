@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <title>Anzu THETA Viewer</title>
+  <style>
+    body {
+      background-color: #ffffff;
+      margin: 0px;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body style="margin: 0px; padding:0px;">
+  <div id="container" style="position:absolute; top: 0px; left:0px; width:100%; "></div>
+  <div style="position:absolute; top:0px; left:4px; background-color: #fcfcfc; opacity: 0.9; padding: 2px;">
+    <label>channel <input id="channel_id" type="text" size="12" value=""></input></label>
+    <button id='start_button' onclick="startViewer();">start</button>
+    <!--
+    <button id='stop_button' onclick="stopViewer();">stop</button>
+    -->
+    <input type="checkbox" id="sense_orientation_check" _not_checked="checked" onclick="toggleSenseOrientation()">Sense Orientation</input>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r73/three.min.js"></script> 
+  <script src="js/theta_gl.js"></script>
+  <script src="js/anzu.min.js"></script>
+  <script type="text/javascript">
+    var channelId = "";
+    //var upstreamToken = "";
+
+    function getChannel() {
+      var channelElement = document.getElementById("channel_id");
+      var channel = channelElement.value;
+      return channel;
+    }
+
+    function startViewer() {
+      channelId = getChannel();
+
+      // 視聴を開始する
+      var anzuDownstream = new Anzu("downstream");
+      anzuDownstream.start(channelId, "")
+      .then(function(params) {
+        //var videoElement = document.getElementById("remote_video");
+        //videoElement.src = window.URL.createObjectURL(params.stream);
+        //videoElement.play();
+        
+        var src = window.URL.createObjectURL(params.stream);
+        THETA_GL.setVideoSrc(src);
+      })
+      .catch(function(error) {
+        console.error(error);
+      });
+    }
+
+    function stopViewer() {
+      console.warn('NOT SUPPORTED YET');
+    }
+
+    var senseOrientationCheckElement = document.getElementById('sense_orientation_check');
+    function isSenseOrientationChecked() {
+      if (! senseOrientationCheckElement) {
+        return false;
+      }
+
+      if (senseOrientationCheckElement.checked) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+
+    function toggleSenseOrientation() {
+      var senseOrientation = isSenseOrientationChecked();
+      console.log('isSenseOrientationChecked() :' + senseOrientation);
+      THETA_GL.followOrientation(senseOrientation);
+    }
+
+
+    THETA_GL.init(/* divId */ 'container', /* autoResuze */ true,  /* debug */ false);
+    THETA_GL.startAnimate();
+  </script>
+</body>
+
+</html>

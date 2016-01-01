@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <title>THETA Viewer</title>
+  <style>
+    body {
+      background-color: #ffffff;
+      margin: 0px;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body style="margin: 0px; padding:0px;">
+  <div id="container" style="position:absolute; top: 0px; left:0px; width:100%; "></div>
+  <div style="position:absolute; top:0px; left:4px; background-color: #fcfcfc; opacity: 0.9; padding: 2px;">
+    <button id='start_button' onclick="startViewer();">start</button>
+    <button id='stop_button' onclick="stopViewer();">stop</button>
+    <input type="checkbox" id="sense_orientation_check" _not_checked="checked" onclick="toggleSenseOrientation()">Sense Orientation</input>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r73/three.min.js"></script> 
+  <script src="js/theta_gl.js"></script>
+  <script type="text/javascript">
+    //var RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+    //var RTCSessionDescription = window.RTCSessionDescription || window.mozRTCSessionDescription;
+    //var RTCIceCandidate = window.RTCIceCandidate || window.mozRTCIceCandidate;
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+    var cameraStream = null;
+    var cameraURL = null;
+
+    function startViewer() {
+      navigator.getUserMedia({video: true},
+        function(stream) {
+          cameraStream = stream;
+          cameraURL = window.URL.createObjectURL(stream);
+          THETA_GL.setVideoSrc(cameraURL);
+        },
+        function(err) {
+          console.error('getUserMedia Error:', err);
+        }
+      );
+    }
+
+    function stopViewer() {
+      THETA_GL.stopVideoSrc();
+      if (cameraURL) {
+        window.URL.revokeObjectURL(cameraURL);
+        cameraURL = null;
+      }
+      if (cameraStream) {
+        stopStream(cameraStream);
+        cameraStream = null;
+      }
+    }
+
+    function stopStream(stream) {
+      var tracks = stream.getTracks();
+      if (! tracks) {
+        console.warn('NO tracks');
+        return;
+      }
+
+      for (index in tracks) {
+        tracks[index].stop();
+      }
+    }
+
+    var senseOrientationCheckElement = document.getElementById('sense_orientation_check');
+    function isSenseOrientationChecked() {
+      if (! senseOrientationCheckElement) {
+        return false;
+      }
+
+      if (senseOrientationCheckElement.checked) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+
+    function toggleSenseOrientation() {
+      var senseOrientation = isSenseOrientationChecked();
+      console.log('isSenseOrientationChecked() :' + senseOrientation);
+      THETA_GL.followOrientation(senseOrientation);
+    }
+
+    THETA_GL.init(/* divId */ 'container', /* autoResuze */ true,  /* debug */ false);
+    THETA_GL.startAnimate();
+  </script>
+</body>
+
+</html>
