@@ -29,7 +29,7 @@ RICHO THETA S の映像をWebGL(three.js)とUVマッピングを用いて、全�
 * [Anzuダッシュボード](https://anzu.shiguredo.jp/dashboard.html)で配信を開始してから、サンプルでチャネルIDを指定して接続していください
 
 ## 使い方
-### 準備
+#### 準備
 * HTMLでthree.js または trhee.min.js を読み込みます
   * [最新版をダウンロード](http://github.com/mrdoob/three.js/zipball/master)するか、[CDNのもの](http://cdnjs.com/libraries/three.js/)を利用します
 * HTMLでtheta_gl.jsを読み込みます
@@ -37,23 +37,23 @@ RICHO THETA S の映像をWebGL(three.js)とUVマッピングを用いて、全�
 * Anzuを利用する場合は、anzu.js または anzu.min.js も必要です
   * [最新版をgithub](https://github.com/shiguredo/anzu-js-sdk)から取得してください
 
-### 初期化
+#### 初期化
 * THETA_GL.init(divId, autoResuze, debugFlag)
   * string divId : WebGLを表示するCanvasのコンテナとなる、div要素のIDを指定
   * bool autoResize : Windowのリサイズに追従するかどうか(true/false)
   * bool debugFlag : デバッグ用に作業用のvideo要素、canvas要素を表示するか、ログ情報をconsoleに表示するか
 
-### WebGLアニメーションの開始
+#### WebGLアニメーションの開始
 * THETA_GL.startAnimate()
 
-### 映像ソースURLの指定
+#### 映像ソースURLの指定
 * THETA_GL.setVideoSrc(url)
   * string url : 映像のURL。Web上のURLか、URL.createObjectURL()で生成したURLを指定
 
-### 映像の停止
+#### 映像の停止
 * THETA_GL.stopVideoSrc()
 
-### デバイスの方向に追従
+#### デバイスの方向に追従
 * THETA_GL.followOrientation(flag)
   * bool flag: スマートデバイスの方向に追従されるかどうかを指定
 
