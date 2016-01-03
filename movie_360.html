@@ -27,8 +27,8 @@
   <script src="js/theta_gl.js"></script>
   <script type="text/javascript">
     function startViewer() {
-      var url = 'your_video_url'
-      THETA_GL.setVideoSrc(url);
+      var url = 'mov/theta1.m4v'
+      THETA_GL.setVideoSrc(url, /* loopFlag */ true);
       THETA_GL.startAnimate();
     }
 
@@ -56,7 +56,8 @@
       THETA_GL.followOrientation(senseOrientation);
     }
 
-    THETA_GL.init(/* divId */ 'container', /* autoResuze */ true,  /* debug */ false);
+    //THETA_GL.init(/* divId */ 'container', /* autoResuze */ true,  /* debug */ false);
+    THETA_GL.init(/* divId */ 'container');
   </script>
 </body>
 

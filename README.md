@@ -21,6 +21,10 @@ RICHO THETA S の映像をWebGL(three.js)とUVマッピングを用いて、全�
 ## サンプル
 http://mganeko.github.io/THETA_GL/
 
+### 録画した映像ファイルを再生
+* THETA Sで録画したファイルを表示するサンプルです
+* [movie_360.html](http://mganeko.github.io/THETA_GL/movie_360.html)
+
 ### USBカメラとして接続して利用
 * navigator.getUserMedia()を利用してカメラ映像を取り込んだものを表示するサンプルです
 * [theta_360.html](http://mganeko.github.io/THETA_GL/theta_360.html)
@@ -41,29 +45,30 @@ http://mganeko.github.io/THETA_GL/
 
 #### 初期化
 * THETA_GL.init(divId, autoResuze, debugFlag)
-  * string divId : WebGLを表示するCanvasのコンテナとなる、div要素のIDを指定
-  * bool autoResize : Windowのリサイズに追従するかどうか(true/false)
-  * bool debugFlag : デバッグ用に作業用のvideo要素、canvas要素を表示するか、ログ情報をconsoleに表示するか
+  * string divId : WebGLを表示するCanvasのコンテナとなる、div要素のIDを指定 ※必須
+  * bool autoResize : Windowのリサイズに追従するかどうか(true/false) ※省略時はtrue
+  * bool debugFlag : デバッグ用に作業用のvideo要素、canvas要素を表示するか、ログ情報をconsoleに表示するか ※省略時はfalse
 
 #### WebGLアニメーションの開始
 * THETA_GL.startAnimate()
 
 #### 映像ソースURLの指定
-* THETA_GL.setVideoSrc(url)
-  * string url : 映像のURL。Web上のURLか、URL.createObjectURL()で生成したURLを指定
+* THETA_GL.setVideoSrc(url, loopFlag)
+  * string url : 映像のURL。Web上のURLか、URL.createObjectURL()で生成したURLを指定 ※必須
+  * bool loopFlag : 映像をループ再生するかどうか(true/false)  ※省略時はfalse
 
 #### 映像の停止
 * THETA_GL.stopVideoSrc()
 
 #### デバイスの方向に追従
 * THETA_GL.followOrientation(flag)
-  * bool flag: スマートデバイスの方向に追従されるかどうかを指定
+  * bool flag: スマートデバイスの方向に追従されるかどうかを指定 ※必須
 
 ### コード例
 ```
 var url = 'http://yourserver.com/video.mp4';
 THETA_GL.init('container', true, false);
-THETA_GL.setVideoSrc(url);
+THETA_GL.setVideoSrc(url, true);
 THETA_GL.startAnimate();
 ```
 

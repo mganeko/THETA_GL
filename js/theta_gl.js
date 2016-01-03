@@ -33,7 +33,8 @@ var _theta_gl = function() {
   //
   // set Video Source URL
   //
-  this.setVideoSrc = function(url) {
+  this.setVideoSrc = function(url, loopFlag) {
+    videoRenderElement.loop = loopFlag;
     videoRenderElement.src = url;
     videoRenderElement.play();
   }
@@ -169,7 +170,7 @@ var _theta_gl = function() {
     container.addEventListener( 'touchcancel', this.onDocumentTouchEnd, false );
     container.addEventListener( 'touchmove', this.onDocumentTouchMove, false );
 
-    if (autoResize) {
+    if (autoResize !== false) {
       window.addEventListener( 'resize', onWindowResize, false );
       onWindowResize();
     }
