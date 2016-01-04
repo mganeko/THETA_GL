@@ -21,6 +21,9 @@ RICHO THETA S の映像をWebGL(three.js)とUVマッピングを用いて、全�
 次の環境で動作確認しています
 * Mac OS X用 Chrome 47.0.2526.106 (64-bit)
 * Mac OS X用 Firefox 43.0.3
+* Windows用 Chrome 47.0.2526.106 m
+* Windows用 Firefox 43.0.2
+
 
 
 ## サンプル
