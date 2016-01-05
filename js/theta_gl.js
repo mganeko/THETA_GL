@@ -145,9 +145,6 @@ var _theta_gl = function() {
       console.log('mesh2 ready');
     });
 
-    //remoteVideo = document.getElementById('remote_video');
-    //remoteVideo.volume = 0;
-
     var geometry = new THREE.SphereGeometry( 500, 60, 40 );
     geometry.scale( - 1, 1, 1 );
 
