@@ -165,10 +165,10 @@ var _theta_gl = function() {
     container.addEventListener( 'mousewheel', onDocumentMouseWheel, false );
     container.addEventListener( 'MozMousePixelScroll', onDocumentMouseWheel, false);
 
-    container.addEventListener( 'touchstart', this.onDocumentTouchStart, false );
-    container.addEventListener( 'touchend', this.onDocumentTouchEnd, false );
-    container.addEventListener( 'touchcancel', this.onDocumentTouchEnd, false );
-    container.addEventListener( 'touchmove', this.onDocumentTouchMove, false );
+    container.addEventListener( 'touchstart', onDocumentTouchStart, false );
+    container.addEventListener( 'touchend', onDocumentTouchEnd, false );
+    container.addEventListener( 'touchcancel', onDocumentTouchEnd, false );
+    container.addEventListener( 'touchmove', onDocumentTouchMove, false );
 
     if (autoResize !== false) {
       window.addEventListener( 'resize', onWindowResize, false );
