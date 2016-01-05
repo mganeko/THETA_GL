@@ -25,6 +25,7 @@ RICHO THETA S の映像をWebGL(three.js)とUVマッピングを用いて、全�
 * Windows用 Firefox 43.0.2
 * Android用 Chrome
 * Android用 Firefox
+
 ※Android用Firefoxでは、m4v形式のためか録画した映像ファイルは再生できていません
 
 
