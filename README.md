@@ -24,6 +24,8 @@ RICHO THETA S の映像をWebGL(three.js)とUVマッピングを用いて、全�
 * Windows用 Chrome 47.0.2526.106 m
 * Windows用 Firefox 43.0.2
 
+※Android用Firefox/Chromeでも表示はできますが、タッチイベントが正しく取得できていません。
+
 
 
 ## サンプル
