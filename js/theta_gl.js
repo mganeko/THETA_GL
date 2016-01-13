@@ -86,7 +86,9 @@ var _theta_gl = function() {
     // camera
     camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 100);
     camera.target = new THREE.Vector3( 0, 0, 0 );
-    camera.fov = 60; // zoom out 
+    //camera.fov = 60; // zoom out
+    camera.fov = 45; // zoom out
+    camera.zoom = 0.8;
     var light = new THREE.AmbientLight(0xffffff);
     light.position.set(0, 0, 0).normalize();
     scene = new THREE.Scene();
@@ -263,6 +265,8 @@ var _theta_gl = function() {
     isUserInteracting = false;
   }
 
+  var FOV_MIN = 20;
+  var FOV_MAX = 140;
   function onDocumentMouseWheel(event) {
     // WebKit
     if ( event.wheelDeltaY ) {
@@ -277,11 +281,11 @@ var _theta_gl = function() {
       camera.fov += event.detail * 1.0;
     }
 
-    if (camera.fov < 20) {
-      camera.fov = 20;
+    if (camera.fov < FOV_MIN) {
+      camera.fov = FOV_MIN;
     }
-    else if (camera.fov > 179) {
-      camera.fov = 179;
+    else if (camera.fov > FOV_MAX) {
+      camera.fov = FOV_MAX;
     }
 
     showMessage('mouseWheel camera.fov=' + camera.fov);
@@ -350,11 +354,11 @@ var _theta_gl = function() {
         showMessage('pinch move:' + l + ', dist=' + distance);
 
         camera.fov -= (distance -  pinchStartDistance)*0.02;
-        if (camera.fov > 179) {
-          camera.fov = 179;
+        if (camera.fov > FOV_MAX) {
+          camera.fov = FOV_MAX;
         }
-        if (camera.fov < 20) {
-          camera.fov = 20;
+        if (camera.fov < FOV_MIN) {
+          camera.fov = FOV_MIN;
         }
         camera.updateProjectionMatrix();
       }
