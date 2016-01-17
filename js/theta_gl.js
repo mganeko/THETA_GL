@@ -99,7 +99,7 @@ var _theta_gl = function() {
     videoTexture.magFilter = THREE.LinearFilter;
 
     //var videoMaterial = new THREE.MeshBasicMaterial( { map: videoTexture, overdraw: true, side:THREE.DoubleSide } );
-    loader.load('uv/release4-1.json', function(geometry1, materials1) {
+    loader.load('uv/half_sphere_1.json', function(geometry1, materials1) {
       // create a new material
       var material1 = new THREE.MeshPhongMaterial({
           map: videoTexture, // specify and load the texture
@@ -123,7 +123,7 @@ var _theta_gl = function() {
       console.log('mesh1 ready');
     });
 
-    loader.load('uv/release4-2.json', function(geometry2, materials2) {
+    loader.load('uv/half_sphere_2.json', function(geometry2, materials2) {
       // create a new material
       var material2 = new THREE.MeshPhongMaterial({
           map: videoTexture, // specify and load the texture
