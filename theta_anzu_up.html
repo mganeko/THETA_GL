@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <title>Anzu THETA Viewer</title>
+  <!-- The MIT License (MIT) Copyright (c) 2015 mganeko -->
+</head>
+
+<body>
+  <div style="top:0px; left:4px; background-color: #fcfcfc; opacity: 0.9; padding: 2px;">
+    <label>channel <input id="channel_id" type="text" size="12" value=""></input></label>
+    <label>token <input id="upstream_token" type="text" size="20" value=""></input></label>
+    <button id='start_button' onclick="startUpstream();">start upstream</button>
+    <!--
+    <button id='stop_button' onclick="stopViewer();">stop</button>
+    -->
+  </div>
+  <video id="local_video" width="320px" height="180px" style="border: solid black 1px;"></video>
+
+  <script src="js/anzu.min.js"></script>
+  <script type="text/javascript">
+    var channelId = "";
+    var upstreamToken = "";
+
+    function getChannel() {
+      var channelElement = document.getElementById("channel_id");
+      var channel = channelElement.value;
+      return channel;
+    }
+
+    function getToken() {
+      var tokenElement = document.getElementById("upstream_token");
+      var token = tokenElement.value;
+      return token;
+    }
+
+    function startUpstream() {
+      channelId = getChannel();
+      upstreamToken = getToken();
+
+      // 視聴を開始する
+      var anzuUpstream = new Anzu("upstream");
+      anzuUpstream.start(channelId, upstreamToken, {video: true, audio: true})
+      .then(function(params) {
+        var videoElement = document.getElementById("local_video");
+        videoElement.src = window.URL.createObjectURL(params.stream);
+        videoElement.volume = 0;
+        videoElement.play();
+      })
+      .catch(function(error) {
+        console.error(error);
+      });
+    }
+
+    function stopVideo() {
+      console.warn('NOT YET');
+    }
+
+  </script>
+</body>
+
+</html>
