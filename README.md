@@ -42,8 +42,11 @@ https://mganeko.github.io/THETA_GL/
 
 ### WebRTC SFU 配信映像を利用
 * [WebRTC SFU as a Service Anzu](https://anzu.shiguredo.jp/) の配信映像を表示するサンプルです
-* [theta_anzu_360.html](https://mganeko.github.io/THETA_GL/theta_anzu_360.html)
-* [Anzuダッシュボード](https://anzu.shiguredo.jp/dashboard.html)で配信を開始してから、サンプルでチャネルIDを指定して接続してください
+* 配信側: [theta_anzu_up.html](https://mganeko.github.io/THETA_GL/theta_anzu_up.html)
+* 視聴側: [theta_anzu_360.html](https://mganeko.github.io/THETA_GL/theta_anzu_360.html)
+* ~~[Anzuダッシュボード](https://anzu.shiguredo.jp/dashboard.html)で配信を開始してから、サンプルでチャネルIDを指定して接続してください~~
+* [Anzuダッシュボード](https://anzu.shiguredo.jp/dashboard.html)でチャンネルIDと配信用トークンを確認し、[theta_anzu_up.html](https://mganeko.github.io/THETA_GL/theta_anzu_up.html)で指定してから配信してください。視聴側は[theta_anzu_360.html](https://mganeko.github.io/THETA_GL/theta_anzu_360.html)でチャネルIDを指定して接続してください
+
 
 ## 使い方
 #### 準備
