@@ -39,6 +39,11 @@
       return channel;
     }
 
+    function setChannel(channel) {
+      var channelElement = document.getElementById("channel_id");
+      channelElement.value = channel; 
+    }
+
     function startViewer() {
       channelId = getChannel();
 
@@ -82,6 +87,40 @@
       THETA_GL.followOrientation(senseOrientation);
     }
 
+    // ---- utility function -----
+    function parseURL() {
+      var queryParams = [];
+      var url = document.location.href;
+      console.log("url = " + url);
+      var args = url.split('?');
+      if (args.length <= 1) {
+        return queryParams;
+      }
+
+      // parse query string
+      var querystring = args[1];
+      params = querystring.split('&');
+      for (var i = 0; i < params.length; i++) {
+        var paramUnit = params[i];
+        var pair = paramUnit.split('=');
+        if (pair.length != 2) {
+          continue; // will not match
+        }
+        console.log('queryParam: ' + pair[0] + '=' + pair[1]);
+        queryParams[pair[0]] = pair[1];
+      }
+      
+      return queryParams;
+    }
+
+    // --- initialize --
+    var params = parseURL();
+    if (params['channel']) {
+      setChannel(params['channel']);
+    }
+    if (params['c']) {
+      setChannel(params['c']);
+    }
 
     THETA_GL.init(/* divId */ 'container', /* autoResuze */ true,  /* debug */ false);
     THETA_GL.startAnimate();

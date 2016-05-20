@@ -36,6 +36,16 @@
       return token;
     }
 
+    function setChannel(channel) {
+      var channelElement = document.getElementById("channel_id");
+      channelElement.value = channel; 
+    }
+
+    function setToken(token) {
+      var tokenElement = document.getElementById("upstream_token");
+      tokenElement.value = token; 
+    }
+
     function startUpstream() {
       channelId = getChannel();
       upstreamToken = getToken();
@@ -56,6 +66,47 @@
 
     function stopVideo() {
       console.warn('NOT YET');
+    }
+
+    // ---- utility function -----
+    function parseURL() {
+      var queryParams = [];
+      var url = document.location.href;
+      console.log("url = " + url);
+      var args = url.split('?');
+      if (args.length <= 1) {
+        return queryParams;
+      }
+
+      // parse query string
+      var querystring = args[1];
+      params = querystring.split('&');
+      for (var i = 0; i < params.length; i++) {
+        var paramUnit = params[i];
+        var pair = paramUnit.split('=');
+        if (pair.length != 2) {
+          continue; // will not match
+        }
+        console.log('queryParam: ' + pair[0] + '=' + pair[1]);
+        queryParams[pair[0]] = pair[1];
+      }
+      
+      return queryParams;
+    }
+
+    // --- initialize --
+    var params = parseURL();
+    if (params['channel']) {
+      setChannel(params['channel']);
+    }
+    if (params['c']) {
+      setChannel(params['c']);
+    }
+    if (params['token']) {
+      setToken(params['token']);
+    }
+    if (params['t']) {
+      setToken(params['t']);
     }
 
   </script>
