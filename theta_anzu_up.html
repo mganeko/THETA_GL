@@ -13,9 +13,7 @@
     <label>channel <input id="channel_id" type="text" size="12" value=""></input></label>
     <label>token <input id="upstream_token" type="text" size="20" value=""></input></label>
     <button id='start_button' onclick="startUpstream();">start upstream</button>
-    <!--
-    <button id='stop_button' onclick="stopViewer();">stop</button>
-    -->
+    <button id='stop_button' onclick="stopUpstream();">stop upsteam</button>
   </div>
   <video id="local_video" width="320px" height="180px" style="border: solid black 1px;"></video>
 
@@ -23,6 +21,7 @@
   <script type="text/javascript">
     var channelId = "";
     var upstreamToken = "";
+    var anzuUpstream = null;
 
     function getChannel() {
       var channelElement = document.getElementById("channel_id");
@@ -51,7 +50,7 @@
       upstreamToken = getToken();
 
       // 視聴を開始する
-      var anzuUpstream = new Anzu("upstream");
+      anzuUpstream = new Anzu("upstream");
       anzuUpstream.start(channelId, upstreamToken, {video: true, audio: true})
       .then(function(params) {
         var videoElement = document.getElementById("local_video");
@@ -64,8 +63,17 @@
       });
     }
 
-    function stopVideo() {
-      console.warn('NOT YET');
+    function stopUpstream() {
+      var videoElement = document.getElementById("local_video");
+      videoElement.pause();
+      if (videoElement.src) {
+        window.URL.revokeObjectURL(videoElement.src);
+        videoElement.src = null;
+      }
+      if (anzuUpstream) {
+        anzuUpstream.disconnect();
+        anzuUpstream = null;
+      }
     }
 
     // ---- utility function -----

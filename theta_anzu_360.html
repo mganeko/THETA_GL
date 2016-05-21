@@ -20,9 +20,7 @@
   <div style="position:absolute; top:0px; left:4px; background-color: #fcfcfc; opacity: 0.9; padding: 2px;">
     <label>channel <input id="channel_id" type="text" size="12" value=""></input></label>
     <button id='start_button' onclick="startViewer();">start</button>
-    <!--
     <button id='stop_button' onclick="stopViewer();">stop</button>
-    -->
     <input type="checkbox" id="sense_orientation_check" _not_checked="checked" onclick="toggleSenseOrientation()">Sense Orientation</input>
   </div>
 
@@ -32,6 +30,7 @@
   <script type="text/javascript">
     var channelId = "";
     //var upstreamToken = "";
+    var anzuDownstream = null;
 
     function getChannel() {
       var channelElement = document.getElementById("channel_id");
@@ -48,7 +47,7 @@
       channelId = getChannel();
 
       // 視聴を開始する
-      var anzuDownstream = new Anzu("downstream");
+      anzuDownstream = new Anzu("downstream");
       anzuDownstream.start(channelId, "")
       .then(function(params) {
         //var videoElement = document.getElementById("remote_video");
@@ -61,10 +60,23 @@
       .catch(function(error) {
         console.error(error);
       });
+      
+      anzuDownstream.onDisconnect(function(evt) {
+        console.log('onDisconnect() evt:', evt);
+      });
+
+      anzuDownstream.onError(function(err) {
+        console.error('onError():', err);
+      });
     }
 
     function stopViewer() {
-      console.warn('NOT SUPPORTED YET');
+      //console.warn('NOT SUPPORTED YET');
+      THETA_GL.stopVideoSrc();
+      if (anzuDownstream) {
+        anzuDownstream.disconnect();
+        anzuDownstream = null;
+      }
     }
 
     var senseOrientationCheckElement = document.getElementById('sense_orientation_check');
