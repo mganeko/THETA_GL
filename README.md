@@ -90,3 +90,4 @@ THETA_GL.startAnimate();
 ## ライセンス
 THETA_GLはMITランセンスで提供されます
 
+![Analytics](https://ga-beacon.appspot.com/UA-73311422-5/Theta-WebGL-viewer)
