@@ -2,7 +2,7 @@
 THETA WebGL Viewer using three.js (Javascript 3D library)
 
 
-[Many thanks to [mganeko](https://github.com/mganeko) for this useful repo! English translation of README.md file for @mganeko’s THETA_GL repo provided by the RICOH THETA Unofficial Guide. Original Japanese language README.md file information is appended below. This is provided “as-is” and unofficial. Comments and edits welcome. More information on useful GitHub repos for the RICOH THETA curatated by the RICOH THETA Unofficial Guide [here](http://lists.theta360.guide/t/theta-github-repository/199/1)]
+[Many thanks to [mganeko](https://github.com/mganeko) for this useful repo! This English translation of the README.md file for mganeko’s THETA_GL repo provided by the RICOH THETA Unofficial Guide. Original Japanese language README.md file information is appended below. This is provided “as-is and unofficial." Comments and edits welcome. More information on useful GitHub repos for the RICOH THETA curatated by the RICOH THETA Unofficial Guide [here](http://lists.theta360.guide/t/theta-github-repository/199/1)]
 
 
 ## Acknowledgments
