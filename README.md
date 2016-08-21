@@ -101,7 +101,7 @@ THETA_GL is under the MIT license
 
 
 [Original Japanese README starts here]
----
+----
 
 # THETA_GL
 THETA WebGL Viewer with three.js
