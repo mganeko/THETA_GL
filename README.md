@@ -32,7 +32,7 @@ I have tested and confirmed the following operating environment:
 * Chrome for Android
 * Firefox for Android
 
-※Maybe because Firefox for Android uses m4v format, playback for recorded video files is not possible.
+_Maybe because Firefox for Android uses m4v format, playback for recorded video files is not possible._
 
 ## Samples
 
