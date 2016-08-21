@@ -66,26 +66,26 @@ _Maybe because Firefox for Android uses m4v format, playback for recorded video 
 
 ## Initialization
 
-* THETA_GL.init(divId, autoResuze, debugFlag)
-  * string divId: It will be a Canvas container displaying WebGL, set the div element ID [REQUIRED]
-  * bool autoResize: Comply with window resize or not (true/false) - default is true
-  * bool debugFlag: For debugging, running video elements or displaying canvas elements, or displaying log information in the console - default is false
+* `THETA_GL.init(divId, autoResuze, debugFlag)`
+  * `string divId`: It will be a Canvas container displaying WebGL, set the div element ID [REQUIRED]
+  * `bool autoResize`: Comply with window resize or not (true/false) - default is true
+  * `bool debugFlag`: For debugging, running video elements or displaying canvas elements, or displaying log information in the console - default is false
 
 #### Starting WebGL Animation
 
-* THETA_GL.startAnimate()
+* `THETA_GL.startAnimate()`
 
 #### Setting the source URL of videos
-* THETA_GL.setVideoSrc(url, loopFlag)
-  * string url: URL for videos. Use a web URL or set a URL created with URL.createObjectURL() [REQUIRED]
-  * bool loopFlag: Run the video in a loop or not (true/false) - default is false
+* `THETA_GL.setVideoSrc(url, loopFlag)`
+  * `string url`: URL for videos. Use a web URL or set a URL created with `URL.createObjectURL()` [REQUIRED]
+  * `bool loopFlag`: Run the video in a loop or not (true/false) - default is false
 
 #### Stopping Video
-* THETA_GL.stopVideoSrc()
+* `THETA_GL.stopVideoSrc()`
 
 #### Setting Device Orientation
-* THETA_GL.followOrientation(flag)
-  * bool flag: Setting whether to follow the smart device orientation or not. [REQUIRED]
+* `THETA_GL.followOrientation(flag)`
+  * `bool flag`: Setting whether to follow the smart device orientation or not. [REQUIRED]
 
 ### Code Samples
 ```
@@ -95,7 +95,7 @@ THETA_GL.setVideoSrc(url, true);
 THETA_GL.startAnimate();
 ```
 
-33 License
+## License
 
 THETA_GL is under the MIT license
 
