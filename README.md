@@ -12,7 +12,7 @@ THETA WebGL Viewer using three.js (Javascript 3D library)
   * three.js is covered under the MIT license
 
 * In order to handle UV Mapping, the following data was utilized:
-  * Hekomi’s “Using RICOH THETA Live View With Unity” http://lists.theta360.guide/t/using-ricoh-theta-live-view-with-unity/70/1
+  * Hekomi’s [“Using RICOH THETA Live View With Unity”](http://lists.theta360.guide/t/using-ricoh-theta-live-view-with-unity/70/1)
   * Based on the UV Mapping information above, a mapping JSON converted and fine tuned for three.js by a Mr. Baba
 
 * Using [anzu-sdk.js](https://github.com/shiguredo/anzu-js-sdk) from the WebRTC SFU as a Service called Anzu, a WebRTC distribution service
