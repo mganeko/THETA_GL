@@ -37,12 +37,10 @@ _Maybe because Firefox for Android uses m4v format, playback for recorded video 
 ## Samples
 
 ### Playback of prerecorded video file
-* Displaying a video sample taken with THETA S
-* https://mganeko.github.io/THETA_GL/movie_360.html
+* [Displaying a video sample](https://mganeko.github.io/THETA_GL/movie_360.html) taken with THETA S
 
 ### Connecting to USB Camera
-* Sample using `navigator.getUserMedia()` with camera video sample
-* [https://mganeko.github.io/THETA_GL/movie_360.html](https://mganeko.github.io/THETA_GL/movie_360.html)
+* [Sample using `navigator.getUserMedia()`](https://mganeko.github.io/THETA_GL/movie_360.html) with camera video sample 
 
 ### Using WebRTC SFU Distribution Video
 [Translator’s Note: This section of links appears to need an account with this service, and this section of links do not appear to work.]
