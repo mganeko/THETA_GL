@@ -1,20 +1,23 @@
 /**
  * theta_gl.js
  * THETA GL
- * @version 0.1.0
+ * @version 0.1.0 - forked
  * @author mganeko and baba
+ * FORKED by @author d3sandoval for discuss.io
  * @license MIT
  */
 
 var _theta_gl = function() {
   // -- this --
   var self = this;
-  
+
   // -- member --
   var camera, scene, renderer;
   var videoImage, videoImageContext, videoTexture;
   var videoRenderElement;
-  
+  var animation;
+  var fullscreenCanvas;
+
   var isUserInteracting = false,
     onMouseDownMouseX = 0, onMouseDownMouseY = 0,
     lon = 0, onMouseDownLon = 0,
@@ -28,7 +31,48 @@ var _theta_gl = function() {
 
   var debugMode = false;
 
-  // -- method --
+  // sets videoRenderElement to any video source (should be a stream)
+  this.overrideVideoElement = function(element) {
+    videoRenderElement = element;
+  }
+
+  // takes a canvas element in and requests fullscreen
+  this.enableFullScreen = function(canvas) {
+    var self = this;
+    fullscreenCanvas = canvas;
+    if(fullscreenCanvas.webkitRequestFullScreen) {
+      fullscreenCanvas.webkitRequestFullScreen();
+    }
+    else {
+      fullscreenCanvas.mozRequestFullScreen();
+    }
+
+    // @see: http://stackoverflow.com/questions/10706070/how-to-detect-when-a-page-exits-fullscreen
+    if (document.addEventListener)
+    {
+      var open = false;
+      document.addEventListener('webkitfullscreenchange', exitHandler, false);
+      document.addEventListener('mozfullscreenchange', exitHandler, false);
+      document.addEventListener('fullscreenchange', exitHandler, false);
+      document.addEventListener('MSFullscreenChange', exitHandler, false);
+    }
+
+    // exitHandler to stopAnimate and remove the fullscreenCanvas from DOM
+    function exitHandler()
+    {
+      if (document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen !== null)
+      {
+          // catch the first event to toggle open
+          if (!open) {
+            open = true;
+          } else {
+            open = false;
+            self.stopAnimate();
+            fullscreenCanvas.remove();
+          }
+      }
+    }
+  }
 
   //
   // set Video Source URL
@@ -56,6 +100,13 @@ var _theta_gl = function() {
   }
 
   //
+  // stop WebGL animation
+  //
+  this.stopAnimate = function() {
+    cancelAnimationFrame( animation );
+  }
+
+  //
   // follow orientation of SmartPhone
   //
   this.followOrientation = function(flag) {
@@ -78,7 +129,7 @@ var _theta_gl = function() {
 
     debugMode = debugFlag;
     prepareVideoElements(debugFlag);
-    
+
     //var loader = new THREE.JSONLoader(true); // init the loader util
     var loader = new THREE.JSONLoader(); // init the loader util
     container = document.getElementById(divId);
@@ -119,7 +170,7 @@ var _theta_gl = function() {
       mesh1.scale.set(0.1, 0.1, 0.1);
       mesh1.position.set(0, 0, 0).normalize();
       scene.add(mesh1);
-      
+
       console.log('mesh1 ready');
     });
 
@@ -161,6 +212,7 @@ var _theta_gl = function() {
     container.addEventListener( 'mousedown', onDocumentMouseDown, false );
     container.addEventListener( 'mousemove', onDocumentMouseMove, false );
     container.addEventListener( 'mouseup', onDocumentMouseUp, false );
+    container.addEventListener( 'mouseout', onDocumentMouseOut, false );
     container.addEventListener( 'mousewheel', onDocumentMouseWheel, false );
     container.addEventListener( 'MozMousePixelScroll', onDocumentMouseWheel, false);
 
@@ -177,23 +229,25 @@ var _theta_gl = function() {
 
   // prepare Hidden elements to convert video to texture
   function prepareVideoElements(debugFlag) {
-    // video element to render 
-    videoRenderElement = document.createElement('video');
-    videoRenderElement.width = 1280;
-    videoRenderElement.height = 720;
-    if (debugFlag) {
-      videoRenderElement.style.visibility = 'true';
-      videoRenderElement.style.position = 'absolute';
-      videoRenderElement.style.top = '200px';
-      videoRenderElement.width = 320;
-      videoRenderElement.height = 180;
+    // video element to render
+    if (!videoRenderElement) {
+      videoRenderElement = document.createElement('video');
+      videoRenderElement.width = 1280;
+      videoRenderElement.height = 720;
+      if (debugFlag) {
+        videoRenderElement.style.visibility = 'true';
+        videoRenderElement.style.position = 'absolute';
+        videoRenderElement.style.top = '200px';
+        videoRenderElement.width = 320;
+        videoRenderElement.height = 180;
+      }
+      else {
+        videoRenderElement.style.visibility = 'hidden';
+      }
+      videoRenderElement.volume = 0;
+      document.body.appendChild(videoRenderElement);
     }
-    else {
-      videoRenderElement.style.visibility = 'hidden';
-    }
-    videoRenderElement.volume = 0;
-    document.body.appendChild(videoRenderElement);
-    
+
     // canvas to convert
     videoImage =  document.createElement('canvas');
 
@@ -205,13 +259,13 @@ var _theta_gl = function() {
       videoImage.width = 320;
       videoImage.height = 180;
     }
-    else {    
+    else {
       videoImage.style.visibility = 'hidden';
       videoImage.width = 1280;
       videoImage.height = 720;
     }
     document.body.appendChild(videoImage);
-    
+
     // context
     videoImageContext = videoImage.getContext('2d');
     videoImageContext.transform( -1, 0, 0, 1, videoImage.width, 0 );
@@ -262,6 +316,13 @@ var _theta_gl = function() {
   }
 
   function onDocumentMouseUp(event) {
+    isUserInteracting = false;
+  }
+
+  //
+  // reset dragability out mouseout
+  //
+  function onDocumentMouseOut(event) {
     isUserInteracting = false;
   }
 
@@ -372,7 +433,7 @@ var _theta_gl = function() {
   }
 
   function animate() {
-    requestAnimationFrame( animate );
+    animation = requestAnimationFrame( animate );
     update();
   }
 
@@ -393,7 +454,7 @@ var _theta_gl = function() {
 
     // video to image
     videoImageContext.drawImage( videoRenderElement, 0, 0, videoImage.width, videoImage.height );
-    if ( videoTexture ) { 
+    if ( videoTexture ) {
       videoTexture.needsUpdate = true;
     }
 
