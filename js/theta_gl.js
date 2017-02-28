@@ -17,6 +17,8 @@ var _theta_gl = function() {
   var videoRenderElement;
   var animation;
   var fullscreenCanvas;
+  var effect;
+  var controls;
 
   var isUserInteracting = false,
     onMouseDownMouseX = 0, onMouseDownMouseY = 0,
@@ -36,8 +38,23 @@ var _theta_gl = function() {
     videoRenderElement = element;
   }
 
+  // splits the canvas into two stereo images
+  // @requries StereoEffect.js from the THREE.js Effects loaded
+  this.enableStereoEffect = function() {
+		effect = new THREE.StereoEffect( renderer );
+		effect.setSize( window.innerWidth, window.innerHeight );
+    update();
+  }
+
+  // reset effect parameter and sets width to default
+  this.disableStereoEffect = function() {
+		effect = undefined;
+    renderer.setSize( window.innerWidth, window.innerHeight )
+    update();
+  }
+
   // takes a canvas element in and requests fullscreen
-  this.enableFullScreen = function(canvas) {
+  this.enableFullScreen = function(canvas, orientationControls) {
     var self = this;
     fullscreenCanvas = canvas;
     if(fullscreenCanvas.webkitRequestFullScreen) {
@@ -45,6 +62,11 @@ var _theta_gl = function() {
     }
     else {
       fullscreenCanvas.mozRequestFullScreen();
+    }
+
+    if (orientationControls) {
+      controls = new THREE.DeviceOrientationControls( camera );
+      controls.connect();
     }
 
     // @see: http://stackoverflow.com/questions/10706070/how-to-detect-when-a-page-exits-fullscreen
@@ -67,9 +89,21 @@ var _theta_gl = function() {
             open = true;
           } else {
             open = false;
-            self.stopAnimate();
-            fullscreenCanvas.remove();
+            // self.stopAnimate();
+            // fullscreenCanvas.remove();
+            zoomOutMobile();
           }
+      }
+
+      // zooming hack to fix our mobile viewports
+      // @see http://stackoverflow.com/questions/22639296/force-mobile-browser-zoom-out-with-javascript
+      function zoomOutMobile() {
+        var viewport = document.querySelector('meta[name="viewport"]');
+
+        if ( viewport ) {
+          viewport.content = "initial-scale=.1"; // can be any decimal (apparently)
+          viewport.content = "width=1200"; // can be any integer (apparently)
+        }
       }
     }
   }
@@ -138,8 +172,10 @@ var _theta_gl = function() {
     camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 100);
     camera.target = new THREE.Vector3( 0, 0, 0 );
     //camera.fov = 60; // zoom out
-    camera.fov = 45; // zoom out
-    camera.zoom = 0.8;
+    // camera.fov = 45; // zoom out
+    camera.fov = 75; // default zoom level
+    // camera.zoom = 0.8;
+    camera.zoom = 1.2; // zoom limits (> 1 == normal human)
     var light = new THREE.AmbientLight(0xffffff);
     light.position.set(0, 0, 0).normalize();
     scene = new THREE.Scene();
@@ -458,8 +494,15 @@ var _theta_gl = function() {
       videoTexture.needsUpdate = true;
     }
 
+    if (controls) {
+      controls.update();
+    }
 
-    renderer.render( scene, camera );
+    if (effect) {
+      effect.render( scene, camera );
+    } else {
+      renderer.render( scene, camera );
+    }
   }
 
 };
